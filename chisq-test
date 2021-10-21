@@ -1,0 +1,22 @@
+# little script for getting a p value with chi squared
+library(tidyverse)
+
+proportions = c(.005, .02, .1, .875)
+observed = c(3, 26, 131, 798)
+total = sum(observed)
+expected = total*proportions
+deg_freedom = length(proportions) - 1
+
+chi_sq = function(observed, expected) {
+  chi2d = sum( (observed - expected)^2 / expected)
+  return(chi2d)
+}
+
+chi_squared = chi_sq(observed, expected)
+p = pchisq(chi_squared, deg_freedom, lower.tail=F)
+print(p)
+
+
+# Or we can use the other thing
+result = chisq.test(observed, p=proportions)
+print(result)
